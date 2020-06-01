@@ -9,10 +9,7 @@ const readData = () => {
     return axios.get("http://127.0.0.1:8000/api/")
 };
 
-// function setIntervalImmediately(func, interval) {
-//     func();
-//     return setInterval(func, interval);
-// }
+
 
 export const startSetFlights = () => {
     return (dispatch, getState) => {

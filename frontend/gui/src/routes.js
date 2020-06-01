@@ -4,7 +4,7 @@ import FlightsDashboardPage from './container/FlightsDashboardPage'
 import FlightDetail from './container/FlightDetailsView'
 
 const BaseRouter = () => (
-  <div>
+  <div className="content-container">
     <Route exact path="/" component={FlightsDashboardPage} />
     <Route exact path="/:flightID" component={FlightDetail} />
   </div>
