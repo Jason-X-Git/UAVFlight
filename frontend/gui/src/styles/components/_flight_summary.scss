@@ -1,0 +1,19 @@
+.summary {
+    background: $other_blue;
+}
+
+.summary__title {
+    color: white;
+    text-decoration: none;
+    h3 {
+        margin: 1rem;
+    }
+}
+
+.summary__content {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    font-size: $m-size;
+    text-decoration: none;
+}
