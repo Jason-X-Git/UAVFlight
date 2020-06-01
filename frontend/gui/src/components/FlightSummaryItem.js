@@ -74,6 +74,11 @@ class FlightSummaryItem extends React.Component {
                                 }
                             </Typography>
                         </ListItemText>
+                        <ListItemText>
+                            <Typography variant="h5">
+                                {this.item.job_desc}
+                            </Typography>
+                        </ListItemText>
                     </ListItem>
                 </Link>
                 <Divider style={{margin: "10px auto"}}/>

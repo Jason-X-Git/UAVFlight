@@ -37,10 +37,10 @@ export class FlightsListFilters extends React.Component {
               // value={this.props.filters.sortBy}
               onChange={this.onSortChange}
             >
-              <option value="Date Desc">Date Desc</option>
-              <option value="Date Asc">Date Asc</option>
               <option value="UAVNo Desc">UAVNo Desc</option>
               <option value="UAVNo Asc">UAVNo Asc</option>
+              <option value="Date Desc">Date Desc</option>
+              <option value="Date Asc">Date Asc</option>
             </select>
           </div>
         </div>
