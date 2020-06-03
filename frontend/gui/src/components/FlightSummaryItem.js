@@ -7,6 +7,7 @@ import Link from "@material-ui/core/Link";
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/styles';
 import {green} from "@material-ui/core/colors";
+import {BoldText} from "./StyledText";
 
 function setIntervalImmediately(func, interval) {
     func();
@@ -27,6 +28,8 @@ const styles = theme => ({
 });
 
 class FlightSummaryItem extends React.Component {
+    intervalID = 0;
+
     state = {
         'current_running': null
     };
@@ -45,7 +48,11 @@ class FlightSummaryItem extends React.Component {
     };
 
     componentDidMount() {
-        setIntervalImmediately(this.running_time, 1000);
+        this.intervalID = setIntervalImmediately(this.running_time, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalID);
     }
 
 
@@ -62,7 +69,7 @@ class FlightSummaryItem extends React.Component {
                     >
                         <ListItemText>
                             <Typography variant="h4">
-                                {`${this.item.uav_no} - ${this.item.grs_job_no}`}
+                                <BoldText>{this.item.uav_no}</BoldText> - {this.item.grs_job_no}
                             </Typography>
                         </ListItemText>
                         <ListItemText>
