@@ -77,15 +77,17 @@ class FlightSummaryItem extends React.Component {
                         </ListItemText>
                         <ListItemText>
                             <Typography variant="h4">
-                                 <InvertedText>
-                                     {this.start_time
-                                     &&
-                                     `@${this.current_step_name}: ${this.state.current_running} 
+                                <InvertedText>
+                                    {this.start_time
+                                    &&
+                                    `@${this.current_step_name}: ${this.state.current_running} 
                                      from ${this.start_time.local().format('YYYY-MM-DD HH:mm:ss')}`}
-                                 </InvertedText>
+                                </InvertedText>
                                 {' '}
-                                {this.current_step_name || this.next_step_names?
-                                    `➡️ ${this.next_step_names}`: this.last_step_name}
+                                {this.current_step_name || this.next_step_names ?
+                                    this.next_step_names.includes("All Done") ?
+                                        `@${this.next_step_names}` : `➡️ ${this.next_step_names}`
+                                    : this.last_step_name}
                             </Typography>
                         </ListItemText>
                         <ListItemText>

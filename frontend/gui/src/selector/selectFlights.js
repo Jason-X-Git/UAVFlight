@@ -14,7 +14,8 @@ export default (flights, { text, sortBy }) => {
         flight.current_step_name.toLowerCase().includes(text.toLowerCase());
     const lastStepMatch = flight.last_step_name &&
         flight.last_step_name.toLowerCase().includes(text.toLowerCase());
-    return uavMatch || jobNoMatch || jobDescMatch || currentStepMatch || lastStepMatch;
+    const nextStepMatch = flight.next_step_names.includes('All Done');
+    return uavMatch || jobNoMatch || jobDescMatch || currentStepMatch || lastStepMatch || nextStepMatch;
   }).sort((a, b) => {
     console.log('Checking sort value', sortBy);
     if (sortBy === 'date_desc') {
