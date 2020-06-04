@@ -44,6 +44,7 @@ const FlightsList = props => {
     const itemsPerPage = 6;
     const [page, setPage] = React.useState(1);
     const noOfPages = Math.ceil(flightsList.length / itemsPerPage);
+    const goPage = page <= noOfPages? page: 1;
 
     const handleChange = (event, value) => {
         console.log('Setting page to ', value);
@@ -56,7 +57,7 @@ const FlightsList = props => {
             <Divider/>
             <List dense compoent="span">
                 {flightsList
-                    .slice((page - 1) * itemsPerPage, page * itemsPerPage)
+                    .slice((goPage - 1) * itemsPerPage, goPage * itemsPerPage)
                     .map((item) => <FlightSummaryItem item={item} key={item.id}/>)}
             </List>
             <Divider/>
