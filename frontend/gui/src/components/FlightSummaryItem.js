@@ -7,7 +7,7 @@ import Link from "@material-ui/core/Link";
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/styles';
 import {green} from "@material-ui/core/colors";
-import {BoldText} from "./StyledText";
+import {BoldText, InvertedText} from "./InvertedText";
 
 function setIntervalImmediately(func, interval) {
     func();
@@ -35,13 +35,16 @@ class FlightSummaryItem extends React.Component {
     };
 
     item = this.props.item;
-    start_time = this.item.current_start ? new moment(this.item.current_start) : null;
+    current_step_name = this.item.current_step_name;
+    next_step_name = this.item.next_step_name;
+    last_step_name = this.item.last_step_name;
+    start_time = this.item.current_start && new moment(this.item.current_start);
 
     running_time = () => {
         const time_diff = new moment().locale('ca').diff(this.start_time);
         const d = moment.duration(time_diff);
-        const days = Number(d.days());
-        const dd = moment.utc(d.as('milliseconds')).format(`${days} [Days] HH[:]mm[:]ss`);
+        const hours = Number(d.days()) * 24 + d.hours();
+        const dd = moment.utc(d.as('milliseconds')).format(`${hours}[:]mm[:]ss`);
         this.setState({
             'current_running': dd
         })
@@ -68,17 +71,20 @@ class FlightSummaryItem extends React.Component {
                         className={classes.listItemStyle}
                     >
                         <ListItemText>
-                            <Typography variant="h4">
+                            <Typography variant="h3">
                                 <BoldText>{this.item.uav_no}</BoldText> - {this.item.grs_job_no}
                             </Typography>
                         </ListItemText>
                         <ListItemText>
-                            <Typography variant="h5">
-                                {this.start_time ?
-                                    `Started at ${this.start_time.local().format('YYYY-MM-DD HH:mm:ss')}.
-                        Already running for ${this.state.current_running}`
-                                    : 'Not Started yet'
-                                }
+                            <Typography variant="h4">
+                                 <InvertedText>
+                                     {this.start_time
+                                     &&
+                                     `${this.current_step_name}: ${this.state.current_running} 
+                                     from ${this.start_time.local().format('YYYY-MM-DD HH:mm:ss')}`}
+                                 </InvertedText>
+                                {' '}
+                                {this.current_step_name? `Next: ${this.next_step_name}`: this.last_step_name}
                             </Typography>
                         </ListItemText>
                         <ListItemText>

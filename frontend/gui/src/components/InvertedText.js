@@ -15,7 +15,7 @@ const styles = makeStyles((theme) => ({
     }
 }));
 
-export const StyledText = (props) => {
+export const InvertedText = (props) => {
     const classes = styles();
     return (
         <Typography variant="inherit" className={classes.defaultStyle}>
