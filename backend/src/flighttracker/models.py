@@ -46,15 +46,18 @@ class UAVFlight(models.Model):
 
             if current_end_index > 0:
                 last_step_name = verbose_name_list[current_end_index - 1]
+                last_end = sorted_end_list[current_end_index - 1]
+                if current_step_name is None:
+                    current_step_name = 'Stopped at {} ({})'.format(last_step_name,
+                                                                    last_end.strftime('%m-%d %H:%M'))
             else:
                 if current_step_name is None:
-                    last_step_name = 'Not Started Yet'
-                else:
-                    last_step_name = None
+                    current_step_name = 'Not Started Yet'
+                last_step_name = None
         else:
             current_start = None
-            current_step_name = None
-            next_step_names = 'All Done'
+            current_step_name = 'All Done'
+            next_step_names = None
             last_step_name = verbose_name_list[-1]
 
         return current_start, current_step_name, next_step_names, last_step_name
@@ -70,7 +73,7 @@ class UAVFlight(models.Model):
     @property
     def next_step_names(self):
         next_step_names = self.current_step_info[2]
-        if isinstance(next_step_names, list):
+        if next_step_names is not None and isinstance(next_step_names, list):
             return ' ➡️ ️'.join(next_step_names)
         return next_step_names
 
