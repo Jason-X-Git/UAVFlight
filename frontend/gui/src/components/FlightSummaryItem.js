@@ -36,7 +36,7 @@ class FlightSummaryItem extends React.Component {
 
     item = this.props.item;
     current_step_name = this.item.current_step_name;
-    next_step_name = this.item.next_step_name;
+    next_step_names = this.item.next_step_names;
     last_step_name = this.item.last_step_name;
     start_time = this.item.current_start && new moment(this.item.current_start);
 
@@ -80,11 +80,12 @@ class FlightSummaryItem extends React.Component {
                                  <InvertedText>
                                      {this.start_time
                                      &&
-                                     `${this.current_step_name}: ${this.state.current_running} 
+                                     `@${this.current_step_name}: ${this.state.current_running} 
                                      from ${this.start_time.local().format('YYYY-MM-DD HH:mm:ss')}`}
                                  </InvertedText>
                                 {' '}
-                                {this.current_step_name? `Next: ${this.next_step_name}`: this.last_step_name}
+                                {this.current_step_name || this.next_step_names?
+                                    `➡️ ${this.next_step_names}`: this.last_step_name}
                             </Typography>
                         </ListItemText>
                         <ListItemText>
