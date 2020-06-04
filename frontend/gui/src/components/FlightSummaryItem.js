@@ -20,7 +20,7 @@ const styles = theme => ({
         flexDirection: 'column',
         alignItems: 'flex-start',
         '&:hover': {
-            backgroundColor: green[600],
+            backgroundColor: green[500],
             color: 'white'
         }
     },

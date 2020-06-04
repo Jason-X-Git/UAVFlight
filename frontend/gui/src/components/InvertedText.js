@@ -1,12 +1,12 @@
 import React from 'react';
-import {red, cyan, green} from "@material-ui/core/colors";
+import {blueGrey} from "@material-ui/core/colors";
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 
 const styles = makeStyles((theme) => ({
     defaultStyle: {
-        backgroundColor: red[100],
-        color: cyan,
+        backgroundColor: blueGrey[600],
+        color: 'white',
         fontWeight: "bold",
     },
 
