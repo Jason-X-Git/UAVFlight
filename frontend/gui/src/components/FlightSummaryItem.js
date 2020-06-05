@@ -71,12 +71,12 @@ class FlightSummaryItem extends React.Component {
                         className={classes.listItemStyle}
                     >
                         <ListItemText>
-                            <Typography variant="h3">
+                            <Typography variant="h4">
                                 <BoldText>{this.item.uav_no}</BoldText> - {this.item.grs_job_no}
                             </Typography>
                         </ListItemText>
                         <ListItemText>
-                            <Typography variant="h4">
+                            <Typography variant="h5">
                                 <BoldText>
                                     {this.current_step_name.includes('Stopped')
                                     || this.current_step_name.includes('Not Started')?
