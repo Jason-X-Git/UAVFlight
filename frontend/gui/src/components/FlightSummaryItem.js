@@ -29,6 +29,7 @@ const styles = theme => ({
 
 class FlightSummaryItem extends React.Component {
     intervalID = 0;
+    anotherIntervalID = 0;
 
     state = {
         ...this.props.item,
@@ -49,10 +50,17 @@ class FlightSummaryItem extends React.Component {
 
     componentDidMount() {
         this.intervalID = setIntervalImmediately(this.running_time, 1000);
+        this.anotherIntervalID = setIntervalImmediately(() => {
+            this.setState({
+                ...this.state,
+                ...this.props.item
+            })
+        }, 60000);
     }
 
     componentWillUnmount() {
         clearInterval(this.intervalID);
+        clearInterval(this.anotherIntervalID);
     }
 
     repeatStringNumTimes = (string, times) => {
@@ -77,7 +85,7 @@ class FlightSummaryItem extends React.Component {
                     >
                         <ListItemText>
                             <Typography variant="h4">
-                                <BoldText>{this.state.uav_no}</BoldText> - {this.state.grs_job_no}
+                                <BoldText>{this.state.uav_no}</BoldText> - {this.state.grs_job_no} - {this.state.id}
                             </Typography>
                         </ListItemText>
                         {this.repeatStringNumTimes('🟢', this.state.success_steps_count)}
