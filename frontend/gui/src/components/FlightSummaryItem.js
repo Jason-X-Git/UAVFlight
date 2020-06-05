@@ -31,22 +31,19 @@ class FlightSummaryItem extends React.Component {
     intervalID = 0;
 
     state = {
-        'current_running': null
+        ...this.props.item,
     };
 
-    item = this.props.item;
-    current_step_name = this.item.current_step_name;
-    next_step_names = this.item.next_step_names;
-    last_step_name = this.item.last_step_name;
-    start_time = this.item.current_start && new moment(this.item.current_start);
 
     running_time = () => {
-        const time_diff = new moment().locale('ca').diff(this.start_time);
+        const start_time = this.state.current_start && new moment(this.state.current_start);
+        const time_diff = new moment().locale('ca').diff(start_time);
         const d = moment.duration(time_diff);
         const hours = Number(d.days()) * 24 + d.hours();
         const dd = moment.utc(d.as('milliseconds')).format(`${hours}[:]mm[:]ss`);
         this.setState({
-            'current_running': dd
+            start_time,
+            current_running_counter: dd
         })
     };
 
@@ -58,13 +55,21 @@ class FlightSummaryItem extends React.Component {
         clearInterval(this.intervalID);
     }
 
+    repeatStringNumTimes = (string, times) => {
+        var repeatedString = "";
+        while (times > 0) {
+            repeatedString += string;
+            times--;
+        }
+        return repeatedString;
+    };
 
     render() {
         const {classes} = this.props;
 
         return (
             <div>
-                <Link href={`/${this.item.id}`} underline="none">
+                <Link href={`/${this.state.id}`} underline="none">
                     <ListItem
                         key={this.key}
                         button
@@ -72,28 +77,34 @@ class FlightSummaryItem extends React.Component {
                     >
                         <ListItemText>
                             <Typography variant="h4">
-                                <BoldText>{this.item.uav_no}</BoldText> - {this.item.grs_job_no}
+                                <BoldText>{this.state.uav_no}</BoldText> - {this.state.grs_job_no}
                             </Typography>
                         </ListItemText>
+                        {this.repeatStringNumTimes('🟢', this.state.success_steps_count)}
+                        {this.repeatStringNumTimes('🔴', this.state.failure_steps_count)}
+                        {this.state.current_start && '🔵'}
+                        {this.repeatStringNumTimes('⚪', this.state.remaining_steps_count)}
                         <ListItemText>
                             <Typography variant="h5">
                                 <BoldText>
-                                    {this.current_step_name.includes('Stopped')
-                                    || this.current_step_name.includes('Not Started')?
-                                        `🥵️ ${this.current_step_name}.` :
-                                        this.current_step_name.includes('Done')?
-                                            `😄 ${this.current_step_name}.`:
-                                    `👍 Running ${this.current_step_name}.`}
-                                    {this.start_time && ` ${this.state.current_running}
-                                     from ${this.start_time.local().format('MM-DD HH:mm')}`}
+                                    {this.state.current_step_name.includes('Stopped')
+                                    || this.state.current_step_name.includes('Not Started') ?
+                                        `🥵️ ${this.state.current_step_name}.` :
+                                        this.state.current_step_name.includes('Done') ?
+                                            `😄 ${this.state.current_step_name}.` :
+                                            this.state.current_step_name.includes('Failure') ?
+                                                `👿 ${this.state.current_step_name}.` :
+                                            `👍 Running ${this.state.current_step_name}.`}
+                                    {this.state.start_time && ` ${this.state.current_running_counter}
+                                     from ${this.state.start_time.local().format('MM-DD HH:mm')}`}
                                 </BoldText>
                                 {' '}
-                                {this.next_step_names && `➡️ ${this.next_step_names}`}
+                                {this.state.next_step_names && `➡️ ${this.state.next_step_names}`}
                             </Typography>
                         </ListItemText>
                         <ListItemText>
                             <Typography variant="h5">
-                                {this.item.job_desc}
+                                {this.state.job_desc}
                             </Typography>
                         </ListItemText>
                     </ListItem>
