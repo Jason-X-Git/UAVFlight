@@ -18,11 +18,11 @@ export default (flights, { text, sortBy }) => {
   }).sort((a, b) => {
     console.log('Checking sort value', sortBy);
     if (sortBy === 'date_desc') {
-      return a.current_start > b.current_start ? -1 : 1;
+      return a.latest_time > b.latest_time && a.uav_no > b.uav_no ? -1 : 1;
     } else if (sortBy === 'uav_no_desc') {
       return a.uav_no > b.uav_no ? -1 : 1;
     } else if (sortBy === 'date_asc') {
-      return a.current_start < b.current_start ? -1 : 1;
+      return a.latest_time < b.latest_time && a.uav_no < b.uav_no ? -1 : 1;
     } else if (sortBy === 'uav_no_asc') {
       return a.uav_no < b.uav_no ? -1 : 1;
     }

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -31,22 +33,23 @@ class UAVFlight(models.Model):
         sorted_end_list = [self.transfer_ended, self.pix4d_step_1_ended, self.pix4d_step_2_ended,
                            self.pix4d_step_3_ended,
                            self.post_pix4d_ended]
+
         if None in sorted_end_list:
-            current_end_index = sorted_end_list.index(None)
-            current_start = sorted_start_list[current_end_index]
+            current_not_end_index = sorted_end_list.index(None)
+            current_start = sorted_start_list[current_not_end_index]
             if current_start is not None:
-                current_step_name = verbose_name_list[current_end_index]
-                if current_end_index < len(sorted_end_list) - 1:
-                    next_step_names = verbose_name_list[current_end_index + 1:]
+                current_step_name = verbose_name_list[current_not_end_index]
+                if current_not_end_index < len(sorted_end_list) - 1:
+                    next_step_names = verbose_name_list[current_not_end_index + 1:]
                 else:
                     next_step_names = None
             else:
                 current_step_name = None
                 next_step_names = None
 
-            if current_end_index > 0:
-                last_step_name = verbose_name_list[current_end_index - 1]
-                last_end = sorted_end_list[current_end_index - 1]
+            if current_not_end_index > 0:
+                last_step_name = verbose_name_list[current_not_end_index - 1]
+                last_end = sorted_end_list[current_not_end_index - 1]
                 if current_step_name is None:
                     current_step_name = 'Stopped at {} ({})'.format(last_step_name,
                                                                     last_end.strftime('%m-%d %H:%M'))
@@ -60,7 +63,13 @@ class UAVFlight(models.Model):
             next_step_names = None
             last_step_name = verbose_name_list[-1]
 
-        return current_start, current_step_name, next_step_names, last_step_name
+        all_time_slots = [item for item in sorted_start_list + sorted_end_list if item is not None]
+        if current_start is None and len(all_time_slots) > 0:
+            latest_time = max(all_time_slots)
+        else:
+            latest_time = datetime.now()
+
+        return current_start, current_step_name, next_step_names, last_step_name, latest_time
 
     @property
     def current_start(self):
@@ -80,3 +89,7 @@ class UAVFlight(models.Model):
     @property
     def last_step_name(self):
         return self.current_step_info[3]
+
+    @property
+    def latest_time(self):
+        return self.current_step_info[4]

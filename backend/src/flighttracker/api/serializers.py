@@ -11,4 +11,4 @@ class UAVFlightSerializer(serializers.ModelSerializer):
                   'pix4d_step_2_started', 'pix4d_step_2_ended',
                   'pix4d_step_3_started', 'pix4d_step_3_ended',
                   'post_pix4d_started', 'post_pix4d_ended',
-                  'current_start', 'current_step_name', 'next_step_names', 'last_step_name')
+                  'current_start', 'current_step_name', 'next_step_names', 'last_step_name', 'latest_time')
