@@ -3,5 +3,5 @@ from rest_framework.routers import DefaultRouter
 from .views import *
 
 router = DefaultRouter()
-router.register('', UAVFlightViewSet, base_name='flighttracker')
+router.register('', UAVFlightViewSet, basename='flighttracker')
 urlpatterns = router.urls
