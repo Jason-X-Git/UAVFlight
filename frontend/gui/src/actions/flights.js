@@ -6,7 +6,7 @@ export const setFlights = (flights) => ({
 });
 
 const readData = () => {
-    return axios.get("http://192.168.1.5:8000/api/")
+    return axios.get(`${process.env.REACT_APP_DJANGO_API_URL}`)
 };
 
 

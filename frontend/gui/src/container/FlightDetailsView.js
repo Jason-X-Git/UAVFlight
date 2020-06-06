@@ -12,7 +12,7 @@ class FlightDetail extends React.Component {
 
   componentDidMount() {
     const flightID = this.props.match.params.flightID;
-    axios.get(`http://127.0.0.1:8000/api/${flightID}/`).then(res => {
+    axios.get(`${process.env.REACT_APP_DJANGO_API_URL}/${flightID}/`).then(res => {
       this.setState({
         flight: res.data
       });

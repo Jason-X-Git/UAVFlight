@@ -7,6 +7,7 @@ backend/src/flighttracker/migrations
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+frontend/gui/.env
 # dependencies
 frontend/gui/node_modules
 frontend/gui/.pnp
