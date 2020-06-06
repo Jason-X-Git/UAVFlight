@@ -42,9 +42,24 @@ class FlightSummaryItem extends React.Component {
         const d = moment.duration(time_diff);
         const hours = Number(d.days()) * 24 + d.hours();
         const dd = moment.utc(d.as('milliseconds')).format(`${hours}[:]mm[:]ss`);
+
+        const totalHours = () => {
+            if (this.state.current_start) {
+                const transferStarted = this.state.transfer_started && new moment(this.state.transfer_started);
+                const transferDiff = new moment().locale('ca').diff(transferStarted);
+                const processing_d = moment.duration(transferDiff);
+                const processingHours = Number(processing_d.days()) * 24 + processing_d.hours();
+                const processing_dd = moment.utc(processing_d.as('milliseconds')).format(`${processingHours}[:]mm[:]ss`);
+                return processing_dd
+            } else {
+                return this.state.total_hours;
+            }
+        };
+
         this.setState({
             start_time,
-            current_running_counter: dd
+            current_running_counter: dd,
+            total_running_counter: totalHours(),
         })
     };
 
@@ -92,22 +107,27 @@ class FlightSummaryItem extends React.Component {
                         {this.repeatStringNumTimes('🔴', this.state.failure_steps_count)}
                         {this.state.current_start && '🔵'}
                         {this.repeatStringNumTimes('⚪', this.state.remaining_steps_count)}
+                        {this.state.total_running_counter}
                         <ListItemText>
                             <Typography variant="h5">
                                 <BoldText>
-                                    {this.state.current_step_name.includes('Stopped')
-                                    || this.state.current_step_name.includes('Not Started') ?
-                                        `🥵️ ${this.state.current_step_name}.` :
-                                        this.state.current_step_name.includes('Done') ?
-                                            `😄 ${this.state.current_step_name}.` :
-                                            this.state.current_step_name.includes('Failure') ?
-                                                `👿 ${this.state.current_step_name}.` :
-                                            `👍 Running ${this.state.current_step_name}.`}
-                                    {this.state.start_time && ` ${this.state.current_running_counter}
-                                     from ${this.state.start_time.local().format('MM-DD HH:mm')}`}
+                                    {
+                                        this.state.current_step_name.includes('Stopped')
+                                        || this.state.current_step_name.includes('Not Started') ?
+                                            `🥵️ ${this.state.current_step_name}.` :
+                                            this.state.current_step_name.includes('Done') ?
+                                                `😄 ${this.state.current_step_name}.` :
+                                                this.state.current_step_name.includes('Failure') ?
+                                                    `👿 ${this.state.current_step_name}.` :
+                                                    <span> <InvertedText
+                                                        text={this.state.current_running_counter}
+                                                    />{'@'}
+                                                        <BoldText text={this.state.current_step_name}/>
+                                               </span>
+                                    }
                                 </BoldText>
                                 {' '}
-                                {this.state.next_step_names && `➡️ ${this.state.next_step_names}`}
+                                {this.state.next_step_names && `➡️${this.state.next_step_names}`}
                             </Typography>
                         </ListItemText>
                         <ListItemText>

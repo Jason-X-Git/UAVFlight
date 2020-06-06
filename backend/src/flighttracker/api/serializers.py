@@ -12,4 +12,5 @@ class UAVFlightSerializer(serializers.ModelSerializer):
                   'pix4d_step_3_started', 'pix4d_step_3_ended', 'pix4d_step_3_status',
                   'post_pix4d_started', 'post_pix4d_ended', 'post_pix4d_status',
                   'current_start', 'current_step_name', 'next_step_names', 'last_step_name', 'latest_time',
-                  'success_steps_count', 'failure_steps_count', 'remaining_steps_count')
+                  'success_steps_count', 'failure_steps_count', 'remaining_steps_count',
+                  'total_hours')

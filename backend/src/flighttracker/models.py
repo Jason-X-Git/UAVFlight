@@ -118,7 +118,7 @@ class UAVFlight(models.Model):
     def next_step_names(self):
         next_step_names = self.current_step_info[2]
         if next_step_names is not None and isinstance(next_step_names, list):
-            return ' ➡️ ️'.join(next_step_names)
+            return '➡️️'.join(next_step_names)
         return next_step_names
 
     @property
@@ -140,3 +140,12 @@ class UAVFlight(models.Model):
     @property
     def remaining_steps_count(self):
         return self.current_step_info[7]
+    
+    @property
+    def total_hours(self):
+        if not self.current_start:
+            total_hours = self.latest_time - self.transfer_started
+        else:
+            total_hours = datetime.now() - self.transfer_started
+        
+        return f'{round(total_hours.total_seconds() / 3600.0, 1)} hours'
