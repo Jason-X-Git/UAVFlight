@@ -6,7 +6,7 @@ import moment from 'moment';
 import Link from "@material-ui/core/Link";
 import Typography from '@material-ui/core/Typography';
 import {withStyles} from '@material-ui/styles';
-import {green} from "@material-ui/core/colors";
+import {lightBlue} from "@material-ui/core/colors";
 import {BoldText, InvertedText} from "./InvertedText";
 
 function setIntervalImmediately(func, interval) {
@@ -20,8 +20,8 @@ const styles = theme => ({
         flexDirection: 'column',
         alignItems: 'flex-start',
         '&:hover': {
-            backgroundColor: green[500],
-            color: 'white'
+            backgroundColor: lightBlue[100],
+            // color: 'whitesmoke'
         }
     },
 
@@ -100,7 +100,9 @@ class FlightSummaryItem extends React.Component {
                     >
                         <ListItemText>
                             <Typography variant="h4">
-                                <BoldText>{this.state.uav_no}</BoldText> - {this.state.grs_job_no} - {this.state.id}
+                                <BoldText>{this.state.uav_no}</BoldText> - {this.state.grs_job_no}{' '}
+                                 (Uploaded on {new moment(this.state.transfer_started).local('ca')
+                                                        .format("LLL")})
                             </Typography>
                         </ListItemText>
                         {this.repeatStringNumTimes('🟢', this.state.success_steps_count)}

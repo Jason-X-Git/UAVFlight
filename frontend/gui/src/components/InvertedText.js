@@ -10,7 +10,16 @@ const styles = makeStyles((theme) => ({
         color: 'white',
         fontWeight: "bold",
         padding: "0.3em",
-        borderRadius: "20%"
+        borderRadius: "10%"
+    },
+
+    circleNumberStyle: {
+        fontSize:"0.9em",
+        opacity:0.76,
+        color: 'white',
+        fontWeight: "bold",
+        padding: "0.05em 0.4em",
+        borderRadius: "80%"
     },
 
     boldStyle: {
@@ -40,10 +49,10 @@ export const BoldText = (props) => {
     )
 };
 
-export const BolderText = (props) => {
+export const CircleNumber = (props) => {
     const classes = styles();
     return (
-        <Typography variant="inherit" className={classes.bolderStyle}>
+        <Typography variant="inherit" className={classes.circleNumberStyle} style={props.style}>
             {props.text || props.children}
         </Typography>
     )

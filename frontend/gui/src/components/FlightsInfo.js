@@ -2,11 +2,14 @@ import React from "react";
 import {connect} from 'react-redux';
 import Typography from "@material-ui/core/Typography";
 import selectFlights from "../selector/selectFlights";
+import {CircleNumber} from "./InvertedText";
 
 export const FlightsInfo = ({flightsCount, runningFlightsCount, failedFlightsCount}) => {
     return (
         <Typography variant="h3" style={{fontWeight: "bolder", color: "darkblue", margin: "0.2em"}}>
-            TOTALLY {flightsCount} flights found ! {runningFlightsCount} are RUNNING now ! {failedFlightsCount} already FAILED !
+            {"TOTALLY"} <CircleNumber style={{backgroundColor: "grey"}}>{flightsCount}</CircleNumber>{" flights found ! "}
+                 <CircleNumber style={{backgroundColor: "blue"}}>{runningFlightsCount}</CircleNumber>{" RUNNING ! "}
+                  <CircleNumber style={{backgroundColor: "red"}}>{failedFlightsCount}</CircleNumber>{" FAILED !"}
         </Typography>
     )
 };
