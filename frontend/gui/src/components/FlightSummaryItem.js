@@ -118,7 +118,9 @@ class FlightSummaryItem extends React.Component {
                                             this.state.current_step_name.includes('Done') ?
                                                 `😄 ${this.state.current_step_name}.` :
                                                 this.state.current_step_name.includes('Failure') ?
-                                                    `👿 ${this.state.current_step_name}.` :
+                                                    `👿 ${this.state.current_step_name} @
+                                                    ${new moment(this.state.latest_time).local('ca')
+                                                        .format("MM-DD HH:mm:ss")}.` :
                                                     <span> <InvertedText
                                                         text={this.state.current_running_counter}
                                                     />{'@'}

@@ -16,7 +16,7 @@ class HeaderTitle extends React.Component {
     componentDidMount() {
         setIntervalImmediately(() => {
             this.setState({
-                curTime: new moment().local().format('YYYY-MM-DD HH:mm:ss')
+                curTime: new moment().local('ca').format('YYYY-MM-DD HH:mm:ss')
             })
         }, 1000)
     }
