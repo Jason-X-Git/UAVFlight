@@ -9,7 +9,7 @@ export const FlightsInfo = ({
                                 successFlightsCount
                             }) => {
     return (
-        <Typography variant="h3" style={{fontWeight: "bolder", color: "darkblue", margin: "0.2em"}}>
+        <Typography variant="h3" style={{fontWeight: "bolder", color: "darkblue", margin: "0.2em", display: "flex"}}>
             <CircleNumber style={{backgroundColor: "grey"}}>{flightsCount}</CircleNumber>{" TOTAL ! "}
             <CircleNumber style={{backgroundColor: "green"}}>{successFlightsCount}</CircleNumber>{" SUCCESS ! "}
             <CircleNumber style={{backgroundColor: "blue"}}>{runningFlightsCount}</CircleNumber>{" RUNNING ! "}

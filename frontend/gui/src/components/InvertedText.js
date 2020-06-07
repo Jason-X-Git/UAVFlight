@@ -15,11 +15,17 @@ const styles = makeStyles((theme) => ({
 
     circleNumberStyle: {
         fontSize:"0.9em",
-        opacity:0.76,
+        opacity:0.7,
         color: 'white',
         fontWeight: "bold",
-        padding: "0.05em 0.4em",
-        borderRadius: "80%"
+        // width:"1.5em",
+        minWidth: "1.4em",
+        // maxWidth: "2.0em",
+        height:"1.2em",
+        padding: "0 0.1em 0 0.1em",
+        margin: "0 10px",
+        borderRadius: "50%",
+        textAlign: "center",
     },
 
     boldStyle: {
@@ -52,9 +58,9 @@ export const BoldText = (props) => {
 export const CircleNumber = (props) => {
     const classes = styles();
     return (
-        <Typography variant="inherit" className={classes.circleNumberStyle} style={props.style}>
+        <div className={classes.circleNumberStyle} style={props.style}>
             {props.text || props.children}
-        </Typography>
+        </div>
     )
 };
 
