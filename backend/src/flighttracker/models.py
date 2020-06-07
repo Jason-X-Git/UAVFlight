@@ -73,7 +73,7 @@ class UAVFlight(models.Model):
                     last_step_name = verbose_name_list[final_not_end_index - 1]
                     last_end = sorted_end_list[final_not_end_index - 1]
                     if current_step_name is None:
-                        current_step_name = 'Stopped at {} ({})'.format(last_step_name,
+                        current_step_name = 'Stopped after {} ({})'.format(last_step_name,
                                                                         last_end.strftime('%m-%d %H:%M'))
 
                 else:
