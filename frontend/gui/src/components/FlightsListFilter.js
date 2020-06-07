@@ -16,11 +16,11 @@ const choices = [
         label: 'UAVNo Asc',
     },
     {
-        value: 'Date Desc',
+        value: 'Processed Date Desc',
         label: 'Processed Date Desc',
     },
     {
-        value: 'Date Asc',
+        value: 'Processed Date Asc',
         label: 'Processed Date Asc',
     },
 ];
@@ -51,9 +51,9 @@ const FlightsListFilters = (props) => {
     };
     const onSortChange = (e) => {
         console.log('Sorting by ', e.target.value);
-        if (e.target.value === 'Date Desc') {
+        if (e.target.value === 'Processed Date Desc') {
             props.sortByDateDesc();
-        } else if (e.target.value === 'Date Asc') {
+        } else if (e.target.value === 'Processed Date Asc') {
             props.sortByDateAsc();
         } else if (e.target.value === 'UAVNo Desc') {
             props.sortByUAVNoDesc();
@@ -67,8 +67,8 @@ const FlightsListFilters = (props) => {
                 <TextField
                     id="standard-basic"
                     label="Search anything"
-                    value={props.filters.text}
                     onChange={onTextChange}
+                    value={props.filters.text}
                     InputLabelProps={{style: {fontSize: 15}}}
                     InputProps={{
                         classes: {
@@ -81,8 +81,8 @@ const FlightsListFilters = (props) => {
                     id="standard-select-sorting"
                     select
                     label="Select SortBy"
-                    // value={currency}
                     onChange={onSortChange}
+                    value={props.filters.sortBy}
                     // helperText="Please select your sorting"
                     InputLabelProps={{style: {fontSize: 15}}}
                     InputProps={{

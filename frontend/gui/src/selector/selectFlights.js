@@ -17,13 +17,13 @@ export default (flights, { text, sortBy }) => {
     return uavMatch || jobNoMatch || jobDescMatch || currentStepMatch || nextStepMatch;
   }).sort((a, b) => {
     console.log('Checking sort value', sortBy);
-    if (sortBy === 'date_desc') {
+    if (sortBy === 'Processed Date Desc') {
       return a.latest_time > b.latest_time && a.uav_no > b.uav_no ? -1 : 1;
-    } else if (sortBy === 'uav_no_desc') {
+    } else if (sortBy === 'UAVNo Desc') {
       return a.uav_no > b.uav_no ? -1 : 1;
-    } else if (sortBy === 'date_asc') {
+    } else if (sortBy === 'Processed Date Asc') {
       return a.latest_time < b.latest_time && a.uav_no < b.uav_no ? -1 : 1;
-    } else if (sortBy === 'uav_no_asc') {
+    } else if (sortBy === 'UAVNo Asc') {
       return a.uav_no < b.uav_no ? -1 : 1;
     }
   });

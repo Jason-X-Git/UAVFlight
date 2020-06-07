@@ -4,7 +4,7 @@ import moment from 'moment';
 
 const filtersReducerDefaultState = {
     text: '',
-    sortBy: 'uav_no_desc',
+    sortBy: 'UAVNo Desc',
 };
 
 export default (state = filtersReducerDefaultState, action) => {
@@ -17,22 +17,22 @@ export default (state = filtersReducerDefaultState, action) => {
         case 'SORT_BY_UAV_NO_DESC':
             return {
                 ...state,
-                sortBy: 'uav_no_desc'
+                sortBy: 'UAVNo Desc'
             };
         case 'SORT_BY_DATE_DESC':
             return {
                 ...state,
-                sortBy: 'date_desc'
+                sortBy: 'Processed Date Desc'
             };
         case 'SORT_BY_UAV_NO_ASC':
             return {
                 ...state,
-                sortBy: 'uav_no_asc'
+                sortBy: 'UAVNo Asc'
             };
         case 'SORT_BY_DATE_ASC':
             return {
                 ...state,
-                sortBy: 'date_asc'
+                sortBy: 'Processed Date Asc'
             };
         default:
             return state;
