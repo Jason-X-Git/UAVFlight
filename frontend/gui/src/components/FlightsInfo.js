@@ -10,11 +10,11 @@ export const FlightsInfo = ({
                             }) => {
     return (
         <Typography variant="h4" style={{fontWeight: "bolder", color: "darkblue", margin: "0.2em", display: "flex"}}>
-            <CircleNumber style={{backgroundColor: "grey"}}>{flightsCount}</CircleNumber>{" TOTAL "}
-            <CircleNumber style={{backgroundColor: "green"}}>{successFlightsCount}</CircleNumber>{" SUCCESS "}
-            <CircleNumber style={{backgroundColor: "blue"}}>{runningFlightsCount}</CircleNumber>{" RUNNING "}
-            <CircleNumber style={{backgroundColor: "brown"}}>{stoppedFlightsCount}</CircleNumber>{" STOPPED "}
-            <CircleNumber style={{backgroundColor: "red"}}>{failedFlightsCount}</CircleNumber>{" FAILED "}
+            <CircleNumber style={{backgroundColor: "grey"}} number={flightsCount} label="TOTAL"/>
+            {successFlightsCount > 0 && <CircleNumber style={{backgroundColor: "green"}} number={successFlightsCount} label="SUCCESS"/>}
+            {runningFlightsCount > 0 && <CircleNumber style={{backgroundColor: "blue"}} number={runningFlightsCount} label="RUNNING"/>}
+            {stoppedFlightsCount > 0 && <CircleNumber style={{backgroundColor: "brown"}} number={stoppedFlightsCount} label="STOPPED"/>}
+            {failedFlightsCount > 0 && <CircleNumber style={{backgroundColor: "green"}} number={failedFlightsCount} label="FAILED"/>}
         </Typography>
     )
 };

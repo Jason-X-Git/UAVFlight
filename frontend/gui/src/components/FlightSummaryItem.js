@@ -149,4 +149,4 @@ class FlightSummaryItem extends React.Component {
 
 }
 
-export default withStyles(styles)(FlightSummaryItem);
+export default withStyles(styles)(React.memo(FlightSummaryItem));
