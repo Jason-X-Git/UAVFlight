@@ -10,11 +10,12 @@ export default (flights, { text, sortBy }) => {
     const uavMatch = flight.uav_no.toLowerCase().includes(text.toLowerCase());
     const jobNoMatch = flight.grs_job_no.toLowerCase().includes(text.toLowerCase());
     const jobDescMatch = flight.job_desc.toLowerCase().includes(text.toLowerCase());
-    const currentStepMatch = flight.current_step_name &&
-        flight.current_step_name.toLowerCase().includes(text.toLowerCase());
-    const nextStepMatch = flight.next_step_names &&
-        flight.next_step_names.toLowerCase().includes(text.toLowerCase());
-    return uavMatch || jobNoMatch || jobDescMatch || currentStepMatch || nextStepMatch;
+    const latestStatusMatch = flight.latest_status.toLowerCase().includes(text.toLowerCase());
+    // const currentStepMatch = flight.current_step_name &&
+    //     flight.current_step_name.toLowerCase().includes(text.toLowerCase());
+    // const nextStepMatch = flight.next_step_names &&
+    //     flight.next_step_names.toLowerCase().includes(text.toLowerCase());
+    return uavMatch || jobNoMatch || jobDescMatch || latestStatusMatch;
   }).sort((a, b) => {
     console.log('Checking sort value', sortBy);
     if (sortBy === 'Processed Date Desc') {

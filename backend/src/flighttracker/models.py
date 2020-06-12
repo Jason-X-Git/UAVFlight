@@ -1,11 +1,18 @@
 from datetime import datetime
-
+from enum import Enum
 from django.db import models
 
 STATUS_OPTIONS = [
     ('Success', 'Success'),
     ('Failure', 'Failure'),
 ]
+
+
+class FightStatus(Enum):
+    SUCCESS = 'SUCCESS'
+    FAILURE = 'FAILURE'
+    RUNNING = 'RUNNING'
+    STOPPED = 'STOPPED'
 
 
 class UAVFlight(models.Model):
@@ -40,8 +47,11 @@ class UAVFlight(models.Model):
         return '{} - {}'.format(self.uav_no, self.grs_job_no)
 
     @property
+    def verbose_name_list(self):
+        return ['Transferring', 'Pix4d Step 1', 'Pix4d Step 2', 'Pix4d Step 3', 'Post Pix4d']
+
+    @property
     def current_step_info(self):
-        verbose_name_list = ['Transferring', 'Pix4d Step 1', 'Pix4d Step 2', 'Pix4d Step 3', 'Post Pix4d']
         sorted_start_list = [self.transfer_started, self.pix4d_step_1_started, self.pix4d_step_2_started,
                              self.pix4d_step_3_started,
                              self.post_pix4d_started]
@@ -51,7 +61,7 @@ class UAVFlight(models.Model):
         sorted_status_list = [self.transfer_status, self.pix4d_step_1_status, self.pix4d_step_2_status,
                               self.pix4d_step_3_status, self.post_pix4d_status]
 
-        all_steps_count = len(verbose_name_list)
+        all_steps_count = len(self.verbose_name_list)
         success_steps_count = sorted_status_list.count('Success')
         failure_steps_count = sorted_status_list.count('Failure')
 
@@ -60,9 +70,9 @@ class UAVFlight(models.Model):
                 final_not_end_index = sorted_status_list.index(None)
                 final_start = sorted_start_list[final_not_end_index]
                 if final_start is not None:
-                    current_step_name = verbose_name_list[final_not_end_index]
+                    current_step_name = self.verbose_name_list[final_not_end_index]
                     if final_not_end_index < len(sorted_end_list) - 1:
-                        next_step_names = verbose_name_list[final_not_end_index + 1:]
+                        next_step_names = self.verbose_name_list[final_not_end_index + 1:]
                     else:
                         next_step_names = None
                 else:
@@ -70,11 +80,11 @@ class UAVFlight(models.Model):
                     next_step_names = None
 
                 if final_not_end_index > 0:
-                    last_step_name = verbose_name_list[final_not_end_index - 1]
+                    last_step_name = self.verbose_name_list[final_not_end_index - 1]
                     last_end = sorted_end_list[final_not_end_index - 1]
                     if current_step_name is None:
                         current_step_name = 'Stopped after {} ({})'.format(last_step_name,
-                                                                        last_end.strftime('%m-%d %H:%M'))
+                                                                           last_end.strftime('%m-%d %H:%M'))
 
                 else:
                     if current_step_name is None:
@@ -85,13 +95,13 @@ class UAVFlight(models.Model):
                 final_start = None
                 current_step_name = 'All Done'
                 next_step_names = None
-                last_step_name = verbose_name_list[-1]
+                last_step_name = self.verbose_name_list[-1]
         else:
             failure_step_index = sorted_status_list.index('Failure')
             final_start = None
-            current_step_name = 'Failure during {}'.format(verbose_name_list[failure_step_index])
+            current_step_name = 'Failure during {}'.format(self.verbose_name_list[failure_step_index])
             next_step_names = None
-            last_step_name = verbose_name_list[failure_step_index - 1]
+            last_step_name = self.verbose_name_list[failure_step_index - 1]
 
         all_time_slots = [item for item in sorted_start_list + sorted_end_list if item is not None]
         if final_start is None and len(all_time_slots) > 0:
@@ -140,12 +150,23 @@ class UAVFlight(models.Model):
     @property
     def remaining_steps_count(self):
         return self.current_step_info[7]
-    
+
     @property
     def total_hours(self):
         if not self.current_start:
             total_hours = self.latest_time - self.transfer_started
         else:
             total_hours = datetime.now() - self.transfer_started
-        
+
         return f'{round(total_hours.total_seconds() / 3600.0, 1)} hours'
+
+    @property
+    def latest_status(self):
+        if self.current_start:
+            return FightStatus.RUNNING.value
+        elif self.failure_steps_count > 0:
+            return FightStatus.FAILURE.value
+        elif self.success_steps_count == len(self.verbose_name_list):
+            return FightStatus.SUCCESS.value
+        else:
+            return FightStatus.STOPPED.value
