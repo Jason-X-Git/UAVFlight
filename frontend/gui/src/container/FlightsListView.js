@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     avatar: {marginRight: theme.spacing(5)},
     paginator: {
         justifyContent: "center",
-        padding: "10px"
+        padding: "15px"
     }
 }));
 
@@ -29,8 +29,9 @@ const Paginator = (props) => (
             page={props.page}
             onChange={props.handleChange}
             defaultPage={1}
+            variant="outlined"
             color="primary"
-            size="large"
+            size="small"
             showFirstButton
             showLastButton
             classes={{ul: props.classes.paginator}}
@@ -44,7 +45,7 @@ const FlightsList = props => {
     const itemsPerPage = 6;
     const [page, setPage] = React.useState(1);
     const noOfPages = Math.ceil(flightsList.length / itemsPerPage);
-    const goPage = page <= noOfPages? page: 1;
+    const goPage = page <= noOfPages ? page : 1;
 
     const handleChange = (event, value) => {
         console.log('Setting page to ', value);
