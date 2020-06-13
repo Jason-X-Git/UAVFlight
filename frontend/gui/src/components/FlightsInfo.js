@@ -5,12 +5,14 @@ import selectFlights from "../selector/selectFlights";
 import {CircleNumber} from "./InvertedText";
 
 export const FlightsInfo = ({
-                                flightsCount, runningFlightsCount, failedFlightsCount, stoppedFlightsCount,
+                                allFlightsCount, filteredFlightsCount, runningFlightsCount, failedFlightsCount, stoppedFlightsCount,
                                 successFlightsCount
                             }) => {
     return (
         <Typography variant="h4" style={{fontWeight: "bolder", color: "darkblue", margin: "0.2em", display: "flex"}}>
-            <CircleNumber style={{backgroundColor: "grey"}} number={flightsCount} label="TOTAL"/>
+            <CircleNumber style={{backgroundColor: "grey"}} number={allFlightsCount} label="TOTAL"/>
+            {allFlightsCount !== filteredFlightsCount && <CircleNumber style={{backgroundColor: "purple"}}
+                                                                      number={filteredFlightsCount} label="FILTERED"/>}
             {successFlightsCount > 0 && <CircleNumber style={{backgroundColor: "green"}} number={successFlightsCount} label="SUCCESS"/>}
             {runningFlightsCount > 0 && <CircleNumber style={{backgroundColor: "blue"}} number={runningFlightsCount} label="RUNNING"/>}
             {stoppedFlightsCount > 0 && <CircleNumber style={{backgroundColor: "brown"}} number={stoppedFlightsCount} label="STOPPED"/>}
@@ -20,14 +22,16 @@ export const FlightsInfo = ({
 };
 
 const mapStateToProps = (state) => {
-    const visibleFlights = selectFlights(state.flights, state.filters);
-    const runningFlights = visibleFlights.filter((item) => (item.current_start));
-    const failedFlights = visibleFlights.filter((item) => (item.failure_steps_count));
-    const stoppedFlights = visibleFlights.filter((item) => (item.current_step_name.includes('Stopped')));
-    const successFlights = visibleFlights.filter((item) => (item.current_step_name.includes('All Done')));
+    const allFlights = state.flights;
+    const filteredFlights = selectFlights(state.flights, state.filters);
+    const runningFlights = filteredFlights.filter((item) => (item.current_start));
+    const failedFlights = filteredFlights.filter((item) => (item.failure_steps_count));
+    const stoppedFlights = filteredFlights.filter((item) => (item.current_step_name.includes('Stopped')));
+    const successFlights = filteredFlights.filter((item) => (item.current_step_name.includes('All Done')));
 
     return {
-        flightsCount: visibleFlights.length,
+        allFlightsCount: allFlights.length,
+        filteredFlightsCount: filteredFlights.length,
         runningFlightsCount: runningFlights.length,
         failedFlightsCount: failedFlights.length,
         stoppedFlightsCount: stoppedFlights.length,
