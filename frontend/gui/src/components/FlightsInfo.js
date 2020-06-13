@@ -14,7 +14,7 @@ export const FlightsInfo = ({
             {successFlightsCount > 0 && <CircleNumber style={{backgroundColor: "green"}} number={successFlightsCount} label="SUCCESS"/>}
             {runningFlightsCount > 0 && <CircleNumber style={{backgroundColor: "blue"}} number={runningFlightsCount} label="RUNNING"/>}
             {stoppedFlightsCount > 0 && <CircleNumber style={{backgroundColor: "brown"}} number={stoppedFlightsCount} label="STOPPED"/>}
-            {failedFlightsCount > 0 && <CircleNumber style={{backgroundColor: "green"}} number={failedFlightsCount} label="FAILED"/>}
+            {failedFlightsCount > 0 && <CircleNumber style={{backgroundColor: "red"}} number={failedFlightsCount} label="FAILED"/>}
         </Typography>
     )
 };
