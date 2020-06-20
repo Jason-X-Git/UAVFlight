@@ -13,8 +13,8 @@ const FlightDetail = (props) => {
             setFlight(res.data);
             // console.log("Details: ", this.state.flight);
         });
-        document.title = `${flight.uav_no}-${flight.grs_job_no}`;
-    });
+        document.title = `${flight.uav_no}-${flight.latest_status}`;
+    }, [flight.latest_status]);
 
     if (flight.id) {
         return (
@@ -23,6 +23,7 @@ const FlightDetail = (props) => {
                     <p>{flight.uav_no}</p>
                     <p>{flight.grs_job_no}</p>
                     <p>{flight.job_desc}</p>
+                    <p>{flight.latest_status}</p>
                 </Card>
             </div>
         );

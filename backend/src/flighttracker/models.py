@@ -17,6 +17,8 @@ class FightStatus(Enum):
 
 class UAVFlight(models.Model):
     uav_no = models.CharField(max_length=8)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     grs_job_no = models.CharField(max_length=8)
     job_desc = models.CharField(max_length=255)
     pm_name = models.CharField(max_length=50, null=True)
@@ -153,10 +155,14 @@ class UAVFlight(models.Model):
 
     @property
     def total_hours(self):
-        if not self.current_start:
-            total_hours = self.latest_time - self.transfer_started
-        else:
-            total_hours = datetime.now() - self.transfer_started
+        try:
+            if not self.current_start:
+                total_hours = self.latest_time - self.transfer_started
+            else:
+                total_hours = datetime.now() - self.transfer_started
+        except Exception as e:
+            print(e, self.uav_no, self.latest_time, self.transfer_started)
+            total_hours = 0
 
         return f'{round(total_hours.total_seconds() / 3600.0, 1)} hours'
 

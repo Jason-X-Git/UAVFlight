@@ -18,7 +18,8 @@ export const startSetFlights = () => {
                 const flights = [];
                 res.data.forEach((flight) => {
                     flights.push({
-                        ...flight
+                        ...flight,
+                        type: 'point'
                     })
                 });
                 dispatch(setFlights(flights));
