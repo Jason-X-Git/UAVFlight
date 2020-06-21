@@ -51,6 +51,7 @@ const MapView = (props) => {
                     "esri/widgets/Search",
                     "esri/Graphic",
                     "esri/layers/GraphicsLayer",
+                    "esri/widgets/BasemapToggle",
                 ],
                 options
             )
@@ -63,6 +64,7 @@ const MapView = (props) => {
                      Search,
                      Graphic,
                      GraphicsLayer,
+                     BasemapToggle,
                  ]) => {
                     // doSomeThing
 
@@ -76,6 +78,13 @@ const MapView = (props) => {
                         center: [-115, 55],
                         zoom: 5,
                     });
+
+                    const basemapToggle = new BasemapToggle({
+                        view:view,
+                        nextBasemap: "satellite",
+                    });
+
+                    view.ui.add(basemapToggle, "bottom-right");
 
                     var coordinateConversionWidget = new CoordinateConversion({
                         view: view,
@@ -142,7 +151,7 @@ const MapView = (props) => {
     useEffect(() => {
         console.log("useEffect ran !");
         loadData();
-    }, [display, flights, loadData]);
+    }, [loadData]);
 
     return (
         <div>

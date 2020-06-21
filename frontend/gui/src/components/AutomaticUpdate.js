@@ -13,7 +13,7 @@ function setIntervalImmediately(func, interval) {
 class AutomaticUpdate extends React.Component {
 
     componentDidMount() {
-        setIntervalImmediately( () => store.dispatch(startSetFlights()), 60000)
+        setIntervalImmediately( () => store.dispatch(startSetFlights()), 300000)
     }
 
     render() {
