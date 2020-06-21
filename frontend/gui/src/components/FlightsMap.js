@@ -19,11 +19,15 @@ colorTypes[statusTypes.STOPPED] = "brown";
 
 const useStyles = makeStyles((theme) => ({
     mapDiv: {
-        width: "100%",
-        height: "500px",
+        float: "left",
+        width: "90%",
+        height: "600px",
         margin: "10px 0 10px 0 ",
         padding: "5px 0"
     },
+    // baseGalleryDiv: {
+    //     width: "10%",
+    // }
 }));
 
 const MapView = (props) => {
@@ -35,7 +39,7 @@ const MapView = (props) => {
 
     const classes = useStyles();
 
-    const loadData = () => {
+    const loadData = (flights) => {
         const options = {
             url: "https://js.arcgis.com/4.15/init.js",
             css: "https://js.arcgis.com/4.15/esri/themes/light/main.css",
@@ -52,6 +56,7 @@ const MapView = (props) => {
                     "esri/Graphic",
                     "esri/layers/GraphicsLayer",
                     "esri/widgets/BasemapToggle",
+                    "esri/widgets/BasemapGallery"
                 ],
                 options
             )
@@ -65,31 +70,39 @@ const MapView = (props) => {
                      Graphic,
                      GraphicsLayer,
                      BasemapToggle,
+                     BasemapGallery,
                  ]) => {
                     // doSomeThing
 
                     const map = new Map({
-                        basemap: "topo-vector",
+                        basemap: "streets",
                     });
 
                     const view = new MapView({
-                        container: "app",
+                        container: "mapDiv",
                         map: map,
                         center: [-115, 55],
                         zoom: 5,
                     });
 
-                    const basemapToggle = new BasemapToggle({
-                        view:view,
-                        nextBasemap: "satellite",
+                    // const basemapToggle = new BasemapToggle({
+                    //     view: view,
+                    //     nextBasemap: "satellite",
+                    // });
+                    //
+                    // view.ui.add(basemapToggle, "bottom-right");
+
+                    const basemapGallery = new BasemapGallery({
+                        view: view,
+                        // container: "baseGalleryDiv",
+                        activeBasemap: "satellite",
                     });
+                    view.ui.add(basemapGallery, "bottom-right");
 
-                    view.ui.add(basemapToggle, "bottom-right");
-
-                    var coordinateConversionWidget = new CoordinateConversion({
+                    const coordinateConversionWidget = new CoordinateConversion({
                         view: view,
                     });
-                    var searchWidget = new Search({
+                    const searchWidget = new Search({
                         view: view,
                     });
 
@@ -101,7 +114,7 @@ const MapView = (props) => {
                     });
                     view.ui.add(searchWidget, {position: "top-right", index: 1});
 
-                    var graphicsLayer = new GraphicsLayer();
+                    const graphicsLayer = new GraphicsLayer();
                     map.add(graphicsLayer);
 
                     const addPoint = (point) => {
@@ -114,12 +127,12 @@ const MapView = (props) => {
                                 width: 1,
                             },
                         };
-                        var pointGraphic = new Graphic({
+                        const pointGraphic = new Graphic({
                             geometry: point,
                             symbol: simpleMarkerSymbol,
                         });
 
-                        var textGraphic = new Graphic({
+                        const textGraphic = new Graphic({
                             geometry: point,
                             symbol: {
                                 type: "text",
@@ -150,19 +163,16 @@ const MapView = (props) => {
 
     useEffect(() => {
         console.log("useEffect ran !");
-        loadData();
-    }, [loadData]);
+        loadData(flights);
+    }, [flights]);
 
     return (
         <div>
             < input type="submit" value={!display ? "Show Flights Map" : "Hide Flights Map"}
                     onClick={() => setDisplay(!display)}></input>
             {display ?
-                <div
-                    id="app" className={classes.mapDiv}
-                >
-                </div> :
-                null
+                <div id="mapDiv" className={classes.mapDiv}></div>
+                : null
             }
         </div>
     );
