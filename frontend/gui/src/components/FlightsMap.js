@@ -19,8 +19,9 @@ colorTypes[statusTypes.STOPPED] = "brown";
 
 const useStyles = makeStyles((theme) => ({
     mapDiv: {
-        float: "left",
+        // float: "left",
         width: "90%",
+        minWidth: "90%",
         height: "600px",
         margin: "10px 0 10px 0 ",
         padding: "5px 0"
@@ -75,6 +76,10 @@ const MapView = (props) => {
                 center: [-115, 55],
                 zoom: 5,
             });
+
+            view.constraints = {
+                minScale: 50000000,  // User cannot zoom out beyond a scale of 1:500,000
+            };
 
             // const basemapToggle = new BasemapToggle({
             //     view: view,
@@ -155,7 +160,7 @@ const MapView = (props) => {
     useEffect(() => {
         console.log("useEffect ran !");
         loadData(flights);
-    }, [flights]);
+    }, [flights, display]);
 
     return (
         <div>
