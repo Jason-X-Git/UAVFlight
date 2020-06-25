@@ -3,6 +3,10 @@ import esriLoader from "esri-loader";
 import {makeStyles} from "@material-ui/core/styles";
 import selectFlights from "../selector/selectFlights";
 import {connect} from "react-redux";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
 
 const statusTypes = {
     RUNNING: "RUNNING",
@@ -22,21 +26,34 @@ const useStyles = makeStyles((theme) => ({
         // float: "left",
         width: "90%",
         minWidth: "90%",
-        height: "600px",
+        // height: "600px",
         margin: "10px 0 10px 0 ",
         padding: "5px 0"
     },
     // baseGalleryDiv: {
     //     width: "10%",
     // }
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 200,
+    },
+    selectCell: {
+        margin: '0 30px',
+        fontSize: 15,
+        fontWeight: 'bold'
+    }
 }));
+
 
 const MapView = (props) => {
 
     const flights = props.flights;
 
 
-    const [display, setDisplay] = useState(true);
+    const [mapHeight, setMapHeight] = useState('60vh');
+    const [center, setCenter] = useState({
+        uav_no: '', longitude: -115, latitude: 55, zoom: 5
+    });
 
     const classes = useStyles();
 
@@ -73,8 +90,8 @@ const MapView = (props) => {
             const view = new MapView({
                 container: "mapDiv",
                 map: map,
-                center: [-115, 55],
-                zoom: 5,
+                center: [center.longitude, center.latitude],
+                zoom: center.zoom,
             });
 
             view.constraints = {
@@ -114,7 +131,7 @@ const MapView = (props) => {
             map.add(graphicsLayer);
 
             const addPoint = (point) => {
-                console.log(`Adding point ${point.uav_no} ${point.latitude} ${point.longitude}`);
+                // console.log(`Adding point ${point.uav_no} ${point.latitude} ${point.longitude}`);
                 const simpleMarkerSymbol = {
                     type: "simple-marker",
                     color: point.latest_status ? colorTypes[point.latest_status] : 'black', // orange
@@ -149,27 +166,53 @@ const MapView = (props) => {
                 graphicsLayer.add(textGraphic);
             };
 
-            flights.map((point) => addPoint(point));
+            flights.map((point) => point.longitude && point.latitude && addPoint(point));
         } catch (e) {
             console.error(e)
-        } finally {
-            console.log('Cannot load ArcGIS Javascript API stuff !')
         }
     };
 
     useEffect(() => {
-        console.log("useEffect ran !");
+        // console.log("useEffect ran !");
         loadData(flights);
-    }, [flights, display]);
+    }, [flights, mapHeight, center]);
 
     return (
         <div>
-            < input type="submit" value={!display ? "Show Flights Map" : "Hide Flights Map"}
-                    onClick={() => setDisplay(!display)}></input>
-            {display ?
-                <div id="mapDiv" className={classes.mapDiv}></div>
-                : null
-            }
+            <FormControl className={classes.formControl}>
+                <InputLabel id="select-map-label">Select Map Height</InputLabel>
+                <Select className={classes.selectCell}
+                        id="select-map-sizer"
+                        value={mapHeight}
+                        onChange={(e) => setMapHeight(e.target.value)}
+                >
+                    <MenuItem value={0}>UAV Flights Map - Off</MenuItem>
+                    <MenuItem value={'60vh'}>UAV Flights Map - Small</MenuItem>
+                    <MenuItem value={'90vh'}>UAV Flights Map - Large</MenuItem>
+                </Select>
+            </FormControl>
+            <FormControl className={classes.formControl}>
+                <InputLabel id="select-uav-label">Zoom to UAV Flight</InputLabel>
+                <Select className={classes.selectCell}
+                        id='select-flight'
+                        label='Zoom to'
+                        onChange={(e) => {
+                            console.log('e value: ', e.target.value);
+                            setCenter(e.target.value);
+                        }
+                        }
+                        value={center.uav_no}
+                >
+                    {flights.map((flight) => <MenuItem key={flight.uav_no}
+                                                       value={{
+                                                           uav_no: flight.uav_no, longitude: flight.longitude,
+                                                           latitude: flight.latitude, zoom: 15
+                                                       }}>
+                        {flight.uav_no}</MenuItem>)}
+                </Select>
+            </FormControl>
+
+            <div id="mapDiv" className={classes.mapDiv} style={{height: mapHeight}}></div>
         </div>
     );
 };

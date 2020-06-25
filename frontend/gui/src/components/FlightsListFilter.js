@@ -50,7 +50,7 @@ const FlightsListFilters = (props) => {
         props.setTextFilter(e.target.value);
     };
     const onSortChange = (e) => {
-        console.log('Sorting by ', e.target.value);
+        // console.log('Sorting by ', e.target.value);
         if (e.target.value === 'Processed Date Desc') {
             props.sortByDateDesc();
         } else if (e.target.value === 'Processed Date Asc') {

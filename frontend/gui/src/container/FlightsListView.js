@@ -48,7 +48,7 @@ const FlightsList = props => {
     const goPage = page <= noOfPages ? page : 1;
 
     const handleChange = (event, value) => {
-        console.log('Setting page to ', value);
+        // console.log('Setting page to ', value);
         setPage(value);
     };
 
