@@ -52,7 +52,7 @@ const MapView = (props) => {
 
     const [mapHeight, setMapHeight] = useState('60vh');
     const [center, setCenter] = useState({
-        uav_no: '', longitude: -115, latitude: 55, zoom: 5
+        uav_no: '', longitude: '-115', latitude: '55', zoom: 5
     });
 
     const classes = useStyles();
@@ -186,28 +186,31 @@ const MapView = (props) => {
                         value={mapHeight}
                         onChange={(e) => setMapHeight(e.target.value)}
                 >
-                    <MenuItem value={0}>UAV Flights Map - Off</MenuItem>
+                    <MenuItem value={'0'}>UAV Flights Map - Off</MenuItem>
                     <MenuItem value={'60vh'}>UAV Flights Map - Small</MenuItem>
                     <MenuItem value={'90vh'}>UAV Flights Map - Large</MenuItem>
                 </Select>
             </FormControl>
-            <FormControl className={classes.formControl}>
+            <FormControl className={classes.formControl} disabled={mapHeight === '0'}>
                 <InputLabel id="select-uav-label">Zoom to UAV Flight</InputLabel>
                 <Select className={classes.selectCell}
                         id='select-flight'
-                        label='Zoom to'
                         onChange={(e) => {
-                            console.log('e value: ', e.target.value);
-                            setCenter(e.target.value);
+                            // console.log('e value: ', e.target.value);
+                            const uav_no = e.target.value;
+                            const flight = flights.find(f => f.uav_no === uav_no);
+                            setCenter({
+                                uav_no: flight.uav_no,
+                                longitude: flight.longitude,
+                                latitude: flight.latitude,
+                                zoom: 15
+                            });
                         }
                         }
                         value={center.uav_no}
                 >
                     {flights.map((flight) => <MenuItem key={flight.uav_no}
-                                                       value={{
-                                                           uav_no: flight.uav_no, longitude: flight.longitude,
-                                                           latitude: flight.latitude, zoom: 15
-                                                       }}>
+                                                       value={flight.uav_no}>
                         {flight.uav_no}</MenuItem>)}
                 </Select>
             </FormControl>
