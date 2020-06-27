@@ -57,6 +57,8 @@ const MapView = (props) => {
 
     const classes = useStyles();
 
+    const flightsFiltered = flights.filter((flight) => flight.latitude && flight.longitude);
+
     const loadData = async (flights) => {
         try {
             const options = {
@@ -166,7 +168,8 @@ const MapView = (props) => {
                 graphicsLayer.add(textGraphic);
             };
 
-            flights.map((point) => point.longitude && point.latitude && addPoint(point));
+
+            flightsFiltered.map((point) => point.longitude && point.latitude && addPoint(point));
         } catch (e) {
             console.error(e)
         }
@@ -209,8 +212,8 @@ const MapView = (props) => {
                         }
                         value={center.uav_no}
                 >
-                    {flights.map((flight) => <MenuItem key={flight.uav_no}
-                                                       value={flight.uav_no}>
+                    {flightsFiltered.map((flight) => <MenuItem key={flight.uav_no}
+                                                               value={flight.uav_no}>
                         {flight.uav_no}</MenuItem>)}
                 </Select>
             </FormControl>
