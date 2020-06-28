@@ -169,7 +169,7 @@ const MapView = (props) => {
             };
 
 
-            flightsFiltered.map((point) => point.longitude && point.latitude && addPoint(point));
+            flights.map((point) => point.longitude && point.latitude && addPoint(point));
         } catch (e) {
             console.error(e)
         }
@@ -177,8 +177,8 @@ const MapView = (props) => {
 
     useEffect(() => {
         // console.log("useEffect ran !");
-        loadData(flights);
-    }, [flights, mapHeight, center]);
+        loadData(flightsFiltered);
+    }, [flightsFiltered, mapHeight, center]);
 
     return (
         <div>
