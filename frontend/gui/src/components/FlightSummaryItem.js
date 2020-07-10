@@ -70,7 +70,7 @@ class FlightSummaryItem extends React.Component {
                 ...this.state,
                 ...this.props.item
             })
-        }, 60000);
+        }, 300000);
     }
 
     componentWillUnmount() {
