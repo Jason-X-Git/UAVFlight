@@ -71,7 +71,8 @@ const MapView = (props) => {
                 Search,
                 Graphic,
                 GraphicsLayer,
-                BasemapGallery] = await esriLoader
+                BasemapGallery,
+                Expand] = await esriLoader
                 .loadModules(
                     [
                         "esri/Map",
@@ -80,7 +81,8 @@ const MapView = (props) => {
                         "esri/widgets/Search",
                         "esri/Graphic",
                         "esri/layers/GraphicsLayer",
-                        "esri/widgets/BasemapGallery"
+                        "esri/widgets/BasemapGallery",
+                        "esri/widgets/Expand"
                     ],
                     options
                 );
@@ -112,7 +114,13 @@ const MapView = (props) => {
                 // container: "baseGalleryDiv",
                 activeBasemap: "satellite",
             });
-            view.ui.add(basemapGallery, "bottom-right");
+
+            const bgExpand = new Expand({
+                view: view,
+                content: basemapGallery
+            });
+
+            view.ui.add(bgExpand, "bottom-right");
 
             const coordinateConversionWidget = new CoordinateConversion({
                 view: view,
