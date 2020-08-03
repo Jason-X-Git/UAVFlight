@@ -47,6 +47,7 @@ const FlightsListFilters = (props) => {
     const classes = useStyles();
 
     const onTextChange = (e) => {
+        // console.log('Searching ', e.target.value)
         props.setTextFilter(e.target.value);
     };
     const onSortChange = (e) => {

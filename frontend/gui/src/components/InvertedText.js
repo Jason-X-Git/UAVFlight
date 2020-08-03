@@ -24,7 +24,7 @@ const styles = makeStyles((theme) => ({
         height: "1.2em",
         padding: "0 0.3em 0 0.3em",
         margin: "0 0.05em 0 0.3em",
-        borderRadius: "50%",
+        borderRadius: "5px",
         textAlign: "center",
     },
 

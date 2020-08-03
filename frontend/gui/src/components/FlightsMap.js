@@ -50,7 +50,7 @@ const MapView = (props) => {
     const flights = props.flights;
 
 
-    const [mapHeight, setMapHeight] = useState('60vh');
+    const [mapHeight, setMapHeight] = useState('0');
     const [center, setCenter] = useState({
         uav_no: '', longitude: '-115', latitude: '55', zoom: 5
     });

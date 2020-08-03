@@ -92,7 +92,7 @@ class FlightSummaryItem extends React.Component {
 
         return (
             <div>
-                <Link href={`/${this.state.id}`} underline="none">
+                <Link href={`/${this.state.project_uuid}`} underline="none">
                     <ListItem
                         key={this.key}
                         button

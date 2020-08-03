@@ -42,7 +42,7 @@ const Paginator = (props) => (
 const FlightsList = props => {
     const flightsList = props.flights;
     const classes = useStyles();
-    const itemsPerPage = 6;
+    const itemsPerPage = 10;
     const [page, setPage] = React.useState(1);
     const noOfPages = Math.ceil(flightsList.length / itemsPerPage);
     const goPage = page <= noOfPages ? page : 1;
@@ -59,7 +59,7 @@ const FlightsList = props => {
             <List dense compoent="span">
                 {flightsList
                     .slice((goPage - 1) * itemsPerPage, goPage * itemsPerPage)
-                    .map((item) => <FlightSummaryItem item={item} key={item.id}/>)}
+                    .map((item) => <FlightSummaryItem item={item} key={item.project_uuid}/>)}
             </List>
             <Divider/>
             <Paginator noOfPages={noOfPages} page={page} handleChange={handleChange} classes={classes}/>

@@ -16,10 +16,10 @@ const FlightDetail = (props) => {
         document.title = `${flight.uav_no}-${flight.latest_status}`;
     }, [flight.latest_status]);
 
-    if (flight.id) {
+    if (flight.project_uuid) {
         return (
             <div>
-                <Card id={flight.id}>
+                <Card id={flight.project_uuid}>
                     <p>{flight.uav_no}</p>
                     <p>{flight.grs_job_no}</p>
                     <p>{flight.job_desc}</p>
