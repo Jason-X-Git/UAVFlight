@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 
 export const setFlights = (flights) => ({
     type: 'SET_FLIGHTS',
@@ -24,14 +25,16 @@ const getItems = async function (pageNo = 1) {
     }
 }
 
-const getEntireItemList = async function (pageNo = 1) {
+const getEntireItemList = async function (pageNo = 1, recentMonths = 1) {
     try {
         const [results, totalPages] = await getItems(pageNo);
         // console.log('Total pages: ', totalPages)
-        if (results.length > 0 && pageNo + 1 <= totalPages) {
-            return results.concat(await getEntireItemList(pageNo + 1));
+        const resultsFiltered = results.filter(item =>
+            moment(item.transfer_started) > moment().add(-recentMonths, 'M'));
+        if (resultsFiltered.length > 0 && pageNo + 1 <= totalPages) {
+            return resultsFiltered.concat(await getEntireItemList(pageNo + 1));
         } else {
-            return results;
+            return resultsFiltered;
         }
 
     } catch (error) {

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import Typography from "@material-ui/core/Typography";
 import selectFlights from "../selector/selectFlights";
 import {CircleNumber} from "./InvertedText";
+import RecentMonths from "./RecentMonths";
 
 export const FlightsInfo = ({
                                 allFlightsCount, filteredFlightsCount, runningFlightsCount, failedFlightsCount, stoppedFlightsCount,
@@ -10,6 +11,7 @@ export const FlightsInfo = ({
                             }) => {
     return (
         <Typography variant="h4" style={{fontWeight: "bolder", color: "darkblue", margin: "0.2em", display: "flex"}}>
+            <RecentMonths/>
             <CircleNumber style={{backgroundColor: "grey"}} number={allFlightsCount} label="TOTAL"/>
             {allFlightsCount !== filteredFlightsCount && <CircleNumber style={{backgroundColor: "purple"}}
                                                                       number={filteredFlightsCount} label="FILTERED"/>}
@@ -25,7 +27,7 @@ const mapStateToProps = (state) => {
     const allFlights = state.flights;
     const filteredFlights = selectFlights(state.flights, state.filters);
     const runningFlights = filteredFlights.filter((item) => (item.current_start));
-    const failedFlights = filteredFlights.filter((item) => (item.failure_steps_count));
+    const failedFlights = filteredFlights.filter((item) => (!item.no_errors));
     const stoppedFlights = filteredFlights.filter((item) => (item.current_step_name.includes('Stopped')));
     const successFlights = filteredFlights.filter((item) => (item.current_step_name.includes('All Done')));
 

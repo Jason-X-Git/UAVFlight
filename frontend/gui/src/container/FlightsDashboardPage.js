@@ -6,7 +6,7 @@ import FlightsMap from "../components/FlightsMap";
 
 const FlightsDashboardPage = () => (
     <div>
-        <FlightsMap />
+        <FlightsMap/>
         <FlightsListFilter/>
         <FlightsInfo/>
         <FlightsListView/>

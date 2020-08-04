@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import BaseRouter from "./routes";
 import {BrowserRouter as Router} from "react-router-dom";
 import AutomaticUpdate from "./components/AutomaticUpdate";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/styles.scss';
 
 
