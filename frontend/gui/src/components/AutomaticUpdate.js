@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {startSetFlights} from "../actions/flights";
 import configureStore from "../store/configureStore";
 import {Provider} from 'react-redux';
@@ -10,19 +10,20 @@ function setIntervalImmediately(func, interval) {
     return setInterval(func, interval);
 }
 
-class AutomaticUpdate extends React.Component {
+const AutomaticUpdate = (props) => {
+    const recentMonths = store.getState().recentMonths;
 
-    componentDidMount() {
-        setIntervalImmediately( () => store.dispatch(startSetFlights()), 300000)
-    }
+    useEffect(() => {
+        const interval = setIntervalImmediately(() => store.dispatch(startSetFlights()), 300000)
+        return () => clearInterval(interval)
+    }, [recentMonths]);
 
-    render() {
-        return (
-            <Provider store={store}>
-                {this.props.children}
-            </Provider>
-        )
-    }
-}
+
+    return (
+        <Provider store={store}>
+            {props.children}
+        </Provider>
+    )
+};
 
 export default AutomaticUpdate;

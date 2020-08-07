@@ -23,17 +23,19 @@ const getItems = async function (pageNo = 1) {
     } catch (error) {
         alert(error);
     }
-}
+};
 
-const getEntireItemList = async function (pageNo = 1, recentMonths = 1) {
+const getEntireItemList = async function (pageNo = 1, recentMonths) {
     try {
+        console.log('Retrieving ', recentMonths, 'months');
         const [results, totalPages] = await getItems(pageNo);
         // console.log('Total pages: ', totalPages)
         const resultsFiltered = results.filter(item =>
             moment(item.transfer_started) > moment().add(-recentMonths, 'M'));
         if (resultsFiltered.length > 0 && pageNo + 1 <= totalPages) {
-            return resultsFiltered.concat(await getEntireItemList(pageNo + 1));
+            return resultsFiltered.concat(await getEntireItemList(pageNo + 1, recentMonths));
         } else {
+            console.log('Done.');
             return resultsFiltered;
         }
 
@@ -44,8 +46,10 @@ const getEntireItemList = async function (pageNo = 1, recentMonths = 1) {
 
 
 export const startSetFlights = () => {
+
     return (dispatch, getState) => {
-        return getEntireItemList()
+        const recentMonths = getState().recentMonths;
+        return getEntireItemList(1, recentMonths)
             .then((items) => {
                 // console.log('Res data, ', items)
                 const flights = [];
