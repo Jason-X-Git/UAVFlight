@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import {connect} from 'react-redux';
 import {startSetFlights} from "../actions/flights";
 import {setRecentMonths} from "../actions/recentMonths"
+import {RotateCircleLoading} from 'react-loadingg';
 
 const RecentMonths = (props) => {
     const [recentMonths, setRecentMonths] = useState(props.recentMonths);
@@ -24,6 +25,7 @@ const RecentMonths = (props) => {
             }
             } style={buttonStyle}>Go</Button>
             {loading && `loading data within ${recentMonths} months......`}
+            {loading && <RotateCircleLoading color='purple'/>}
         </div>
     );
 };

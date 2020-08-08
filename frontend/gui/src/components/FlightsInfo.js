@@ -11,16 +11,27 @@ export const FlightsInfo = ({
                             }) => {
     console.log('max date: ', maxDate);
     return (
-        <Typography variant="h4" style={{fontWeight: "bolder", color: "darkblue", margin: "0.2em", display: "flex"}}>
-            <CircleNumber style={{backgroundColor: "grey"}} number={allFlightsCount} label="TOTAL"/>
-            {allFlightsCount !== filteredFlightsCount && <CircleNumber style={{backgroundColor: "purple"}}
-                                                                      number={filteredFlightsCount} label="FILTERED"/>}
-            {successFlightsCount > 0 && <CircleNumber style={{backgroundColor: "green"}} number={successFlightsCount} label="SUCCESS"/>}
-            {runningFlightsCount > 0 && <CircleNumber style={{backgroundColor: "blue"}} number={runningFlightsCount} label="RUNNING"/>}
-            {stoppedFlightsCount > 0 && <CircleNumber style={{backgroundColor: "brown"}} number={stoppedFlightsCount} label="STOPPED"/>}
-            {failedFlightsCount > 0 && <CircleNumber style={{backgroundColor: "red"}} number={failedFlightsCount} label="FAILED"/>}
-            {minDate && maxDate && ` (From ${minDate} to ${maxDate})`}
-        </Typography>
+        <React.Fragment>
+
+            <Typography variant="h4"
+                        style={{fontWeight: "bolder", color: "darkblue", margin: "0.2em", display: "flex"}}>
+                <CircleNumber style={{backgroundColor: "grey"}} number={allFlightsCount} label="TOTAL"/>
+                {allFlightsCount !== filteredFlightsCount && <CircleNumber style={{backgroundColor: "purple"}}
+                                                                           number={filteredFlightsCount}
+                                                                           label="FILTERED"/>}
+                {successFlightsCount > 0 &&
+                <CircleNumber style={{backgroundColor: "green"}} number={successFlightsCount} label="SUCCESS"/>}
+                {runningFlightsCount > 0 &&
+                <CircleNumber style={{backgroundColor: "blue"}} number={runningFlightsCount} label="RUNNING"/>}
+                {stoppedFlightsCount > 0 &&
+                <CircleNumber style={{backgroundColor: "brown"}} number={stoppedFlightsCount} label="STOPPED"/>}
+                {failedFlightsCount > 0 &&
+                <CircleNumber style={{backgroundColor: "red"}} number={failedFlightsCount} label="FAILED"/>}
+            </Typography>
+            <Typography variant="h5" style={{textAlign: "center", margin: "5px auto"}}>
+                {minDate && maxDate && `From ${minDate} to ${maxDate}`}
+            </Typography>
+        </React.Fragment>
     )
 };
 
