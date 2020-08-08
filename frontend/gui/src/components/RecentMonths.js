@@ -20,22 +20,24 @@ const RecentMonths = (props) => {
                 console.log('Dispatch for ', recentMonths, ' months');
                 setLoading(true);
                 await props.setRecentMonths(recentMonths);
-                await props.startSetFlights(recentMonths);
+                const fetchTime = await props.startSetFlights();
                 setLoading(false);
             }
             } style={buttonStyle}>Go</Button>
-            {loading && `loading data within ${recentMonths} months......`}
+            {loading? `loading data within ${recentMonths} months......`:
+                props.fetchTime && `Fetched @ ${props.fetchTime.format('YYYY-MM-DD HH:mm')}`}
             {loading && <RotateCircleLoading color='purple'/>}
         </div>
     );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
+    fetchTime: ownProps.fetchTime,
     recentMonths: state.recentMonths
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    startSetFlights: (recentMonths) => dispatch(startSetFlights(recentMonths)),
+    startSetFlights: () => dispatch(startSetFlights()),
     setRecentMonths: (recentMonths) => dispatch(setRecentMonths(recentMonths)),
 });
 

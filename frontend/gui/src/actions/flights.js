@@ -60,7 +60,7 @@ export const startSetFlights = () => {
                     })
                 });
                 dispatch(setFlights(flights));
-            })
+            }).then(() => moment().local('ca'))
     }
 };
 
