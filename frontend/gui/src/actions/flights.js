@@ -60,7 +60,9 @@ export const startSetFlights = () => {
                     })
                 });
                 dispatch(setFlights(flights));
-            }).then(() => moment().local('ca'))
+            })
+            .then(() => moment().local())
+            .catch(error => alert(error))
     }
 };
 

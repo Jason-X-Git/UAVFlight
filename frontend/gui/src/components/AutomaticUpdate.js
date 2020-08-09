@@ -46,7 +46,8 @@ const AutomaticUpdate = (props) => {
                         onClick={() => setPageRecentMonths(
                             (pageRecentMonths - 1) < 1 ? 1 : pageRecentMonths - 1)}
                         style={buttonStyle}>-</Button>
-                <Button disabled={loading} onClick={async () => {
+                <Button disabled={loading || pageRecentMonths === storeRecentMonths}
+                        onClick={async () => {
                     console.log('Dispatch for ', pageRecentMonths, ' months');
                     setLoading(true);
                     await store.dispatch(setRecentMonths(pageRecentMonths));

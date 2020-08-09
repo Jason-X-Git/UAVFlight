@@ -101,7 +101,7 @@ class FlightSummaryItem extends React.Component {
                         <ListItemText>
                             <Typography variant="h4">
                                 <BoldText>{this.state.uav_no}</BoldText> - {this.state.grs_job_no}{' '}
-                                 (Uploaded on {new moment(this.state.transfer_started).local('ca')
+                                 (Uploaded on {new moment(this.state.transfer_started).local()
                                                         .format("LLL")})
                             </Typography>
                         </ListItemText>
@@ -121,7 +121,7 @@ class FlightSummaryItem extends React.Component {
                                                 `😄 ${this.state.current_step_name}.` :
                                                 this.state.current_step_name.includes('Failure') ?
                                                     `👿 ${this.state.current_step_name} @
-                                                    ${new moment(this.state.latest_time).local('ca')
+                                                    ${new moment(this.state.latest_time).local()
                                                         .format("MM-DD HH:mm:ss")}.` :
                                                     <span> <InvertedText
                                                         text={this.state.current_running_counter}
